@@ -1,0 +1,47 @@
+name: code_hax
+description: Elite Code Debugger with AI Chat - CodeHax is an intelligent code debugging assistant powered by Groq AI.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # HTTP & Networking
+  http: ^1.1.0
+  
+  # Fonts
+  google_fonts: ^6.1.0
+  
+  # UI
+  cupertino_icons: ^1.0.2
+
+  flutter_secure_storage: ^9.0.0
+  flutter_markdown: ^0.7.7+1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Assets (uncomment if you add images)
+  # assets:
+  #   - assets/images/
+  #   - assets/fonts/
+
+  # Fonts (uncomment if you add custom fonts)
+  # fonts:
+  #   - family: RobotoMono
+  #     fonts:
+  #       - asset: assets/fonts/RobotoMono-Regular.ttf
+  #       - asset: assets/fonts/RobotoMono-Bold.ttf
+  #         weight: 700
