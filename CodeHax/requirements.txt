@@ -17,4 +17,4 @@ bcrypt==4.1.1
 
 # Additional utilities
 python-dateutil==2.8.2
-fastapi-mail
+resend
