@@ -395,7 +395,7 @@ async def send_otp(data: EmailRequest):
     try:
         resend.api_key = os.getenv("RESEND_API_KEY")
         resend.Emails.send({
-            "from": "onboarding@resend.dev",
+            "from": "noreply@codehax.in",
             "to": data.email,
             "subject": "CodeHax OTP Verification",
             "text": f"Your OTP is: {otp}"
