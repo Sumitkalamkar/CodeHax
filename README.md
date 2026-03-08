@@ -315,7 +315,7 @@ flutter run
 </details>
 
 <details>
-<summary>📧 RESEND_API_KEY</summary>
+<summary> RESEND_API_KEY</summary>
 
 1. Visit [resend.com](https://resend.com) → Sign up
 2. Go to **API Keys** → **Create API Key**
@@ -599,7 +599,7 @@ Render's free tier spins down after 15 minutes of inactivity. To prevent this, s
    - **Schedule:** Custom → `*/14 * * * *` (every 14 minutes)
 3. Save
 
-This pings your backend every 14 minutes keeping it always awake. ✅
+This pings your backend every 14 minutes keeping it always awake. 
 
 ---
 
