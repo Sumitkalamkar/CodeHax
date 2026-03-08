@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppConstants {
   // Backend URL - UPDATE WITH YOUR IP
-  static const String backendUrl = 'http://localhost:8000';
+  static const String backendUrl = 'https://codehax-backend.onrender.com';
 
   // Colors
   static const Color primaryDark = Color(0xFF0a0e27);

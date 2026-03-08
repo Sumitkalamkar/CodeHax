@@ -76,10 +76,8 @@ class _OtpPageState extends State<OtpPage> {
     });
 
     try {
-      // ✅ STEP 1 — VERIFY OTP
       await authService.verifyOtp(widget.email, otp);
 
-      // ✅ STEP 2 — CREATE ACCOUNT AFTER VERIFY
       final result = await authService.signup(
         username: widget.username,
         email: widget.email,
@@ -103,6 +101,18 @@ class _OtpPageState extends State<OtpPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // Responsive OTP box size
+    // Container max 400, padding 32 each side = 336 usable
+    // 6 boxes + 5 gaps: boxWidth*6 + gap*5 <= usable
+    final containerWidth = (screenWidth - 40).clamp(0.0, 400.0);
+    final usable = containerWidth - 64; // 32 padding each side
+    final gap = (usable * 0.04).clamp(4.0, 10.0);
+    final boxWidth = ((usable - gap * 5) / 6).clamp(32.0, 52.0);
+    final boxHeight = (boxWidth * 1.2).clamp(40.0, 60.0);
+    final fontSize = (boxWidth * 0.45).clamp(16.0, 24.0);
+
     return Scaffold(
       backgroundColor: AppConstants.primaryDark,
       body: Center(
@@ -122,7 +132,7 @@ class _OtpPageState extends State<OtpPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
 
-                    // ── Logo ──
+                    // Logo
                     Text(
                       'CodeHax',
                       style: GoogleFonts.robotoMono(
@@ -143,7 +153,7 @@ class _OtpPageState extends State<OtpPage> {
 
                     const SizedBox(height: 24),
 
-                    // ── Shield Icon ──
+                    // Shield Icon
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
@@ -154,7 +164,7 @@ class _OtpPageState extends State<OtpPage> {
                           width: 1.5,
                         ),
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.shield_outlined,
                         color: AppConstants.accentGreen,
                         size: 36,
@@ -163,7 +173,7 @@ class _OtpPageState extends State<OtpPage> {
 
                     const SizedBox(height: 20),
 
-                    // ── Description ──
+                    // Description
                     Text(
                       'Enter the 6-digit code sent to',
                       style: GoogleFonts.robotoMono(
@@ -181,19 +191,20 @@ class _OtpPageState extends State<OtpPage> {
                         fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
                     ),
 
                     const SizedBox(height: 28),
 
-                    // ── OTP Boxes ──
+                    // ── OTP Boxes (RESPONSIVE) ──
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(_otpLength, (i) {
                         return Padding(
-                          padding: EdgeInsets.only(right: i < _otpLength - 1 ? 10 : 0),
+                          padding: EdgeInsets.only(right: i < _otpLength - 1 ? gap : 0),
                           child: SizedBox(
-                            width: 46,
-                            height: 56,
+                            width: boxWidth,
+                            height: boxHeight,
                             child: RawKeyboardListener(
                               focusNode: FocusNode(),
                               onKey: (event) => _onKeyEvent(i, event),
@@ -208,13 +219,14 @@ class _OtpPageState extends State<OtpPage> {
                                 ],
                                 style: GoogleFonts.robotoMono(
                                   color: Colors.white,
-                                  fontSize: 22,
+                                  fontSize: fontSize,
                                   fontWeight: FontWeight.bold,
                                 ),
                                 decoration: InputDecoration(
                                   counterText: '',
                                   filled: true,
                                   fillColor: Colors.white.withOpacity(0.05),
+                                  contentPadding: EdgeInsets.zero,
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(8),
                                     borderSide: BorderSide(
@@ -243,7 +255,7 @@ class _OtpPageState extends State<OtpPage> {
                       }),
                     ),
 
-                    // ── Error Banner ──
+                    // Error Banner
                     if (error != null) ...[
                       const SizedBox(height: 16),
                       Container(
@@ -256,10 +268,7 @@ class _OtpPageState extends State<OtpPage> {
                         ),
                         child: Text(
                           error!,
-                          style: GoogleFonts.robotoMono(
-                            color: Colors.red,
-                            fontSize: 12,
-                          ),
+                          style: GoogleFonts.robotoMono(color: Colors.red, fontSize: 12),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -267,7 +276,7 @@ class _OtpPageState extends State<OtpPage> {
 
                     const SizedBox(height: 24),
 
-                    // ── Verify Button ──
+                    // Verify Button
                     ElevatedButton(
                       onPressed: loading ? null : verifyOtp,
                       style: ElevatedButton.styleFrom(
@@ -275,9 +284,7 @@ class _OtpPageState extends State<OtpPage> {
                         foregroundColor: Colors.black,
                         minimumSize: const Size(double.infinity, 48),
                         disabledBackgroundColor: Colors.grey,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       ),
                       child: loading
                           ? SizedBox(
@@ -299,29 +306,21 @@ class _OtpPageState extends State<OtpPage> {
 
                     const SizedBox(height: 16),
 
-                    // ── Back to Sign Up ──
+                    // Back to Sign Up
                     GestureDetector(
                       onTap: () => Navigator.of(context).pop(),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(
-                            Icons.arrow_back_ios,
-                            size: 12,
-                            color: Colors.white38,
-                          ),
+                          const Icon(Icons.arrow_back_ios, size: 12, color: Colors.white38),
                           const SizedBox(width: 4),
                           Text(
                             'Back to Sign Up',
-                            style: GoogleFonts.robotoMono(
-                              color: Colors.white38,
-                              fontSize: 12,
-                            ),
+                            style: GoogleFonts.robotoMono(color: Colors.white38, fontSize: 12),
                           ),
                         ],
                       ),
                     ),
-
                   ],
                 ),
               ),
