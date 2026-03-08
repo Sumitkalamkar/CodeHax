@@ -85,7 +85,7 @@ Powered by **Groq's ultra-fast inference**, CodeHax delivers AI responses in mil
 
 | Login Page | OTP Verification | Chat Interface |
 |:---:|:---:|:---:|
-| ![Login](https://via.placeholder.com/250x400/0a0f0a/00ff41?text=Login) | ![OTP](https://via.placeholder.com/250x400/0a0f0a/00ff41?text=OTP) | ![Chat](https://via.placeholder.com/250x400/0a0f0a/00ff41?text=Chat) |
+| ![Login](code_hax/Screenshot/login_page.png) | ![OTP](code_hax/Screenshot/signup_page.png) | ![Chat](code_hax/Screenshot/Neural_vault_chat.png) |
 
 > 🎬 **Demo Video:** [Watch on YouTube](#) _(coming soon)_
 
