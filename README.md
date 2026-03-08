@@ -2,7 +2,7 @@
 
 # ⚡ CodeHax
 
-<img src="assets/logo.png" alt="CodeHax Logo" width="120" height="120" />
+<img src="code_hax/Screenshot/logo.png" alt="CodeHax Logo" width="120" height="120" />
 
 ### `// your elite code assistant`
 
