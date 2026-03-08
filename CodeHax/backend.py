@@ -7,7 +7,7 @@ import os
 import logging
 from dotenv import load_dotenv
 import uuid
-from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
+import resend
 from pydantic import BaseModel, EmailStr
 import random
 from datetime import timedelta
@@ -213,9 +213,6 @@ async def get_profile(authorization: str = Header(None)):
 async def save_chat(data: dict, authorization: str = Header(None)):
     """Save chat to history - GROUPS BY SESSION_ID (FIXED VERSION)"""
 
-    # =============================
-    # AUTH CHECK
-    # =============================
     if not authorization:
         raise HTTPException(status_code=401, detail="Not authenticated")
 
@@ -228,24 +225,16 @@ async def save_chat(data: dict, authorization: str = Header(None)):
     try:
         chat_history = get_chat_history_collection()
 
-        # =============================
-        # ✅ FIXED SESSION HANDLING
-        # =============================
         session_id = data.get("session_id")
 
-        # 🔥 DO NOT AUTO GENERATE (IMPORTANT)
         if not session_id:
             raise HTTPException(status_code=400, detail="session_id is required")
 
-        # DEBUG (optional but useful)
         print("SESSION FROM FRONTEND:", session_id)
 
-        # =============================
-        # SAVE RECORD
-        # =============================
         record = {
             "user_id": user_id,
-            "session_id": session_id,  # ✅ ALWAYS SAME SESSION
+            "session_id": session_id,
             "user_prompt": data.get("user_prompt", ""),
             "ai_response": data.get("ai_response", ""),
             "fixed_code": data.get("fixed_code", ""),
@@ -291,12 +280,10 @@ async def get_history(
     try:
         chat_history = get_chat_history_collection()
         
-        # GET ALL CHATS FOR THIS USER
         all_chats = list(chat_history.find(
             {"user_id": user_id}
         ).sort("timestamp", -1))
         
-        # GROUP BY SESSION_ID - GET FIRST MESSAGE FROM EACH SESSION
         sessions = {}
         for chat in all_chats:
             session_id = chat.get("session_id", chat['_id'])
@@ -316,11 +303,9 @@ async def get_history(
             
             sessions[session_id]["message_count"] += 1
         
-        # CONVERT TO LIST AND PAGINATE
         sessions_list = list(sessions.values())
         total = len(sessions_list)
         
-        # PAGINATE
         skip = (page - 1) * limit
         items = sessions_list[skip:skip + limit]
         
@@ -355,7 +340,6 @@ async def get_session_messages(
     try:
         chat_history = get_chat_history_collection()
         
-        # GET ALL MESSAGES IN THIS SESSION
         messages = list(chat_history.find({
             "user_id": user_id,
             "session_id": session_id
@@ -385,21 +369,9 @@ async def get_session_messages(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-
 # ============================================
-# OTP ENDPOINTS (ADD HERE)
+# OTP ENDPOINTS
 # ============================================
-
-# MAIL CONFIG
-conf = ConnectionConfig(
-    MAIL_USERNAME=os.getenv("MAIL_USERNAME"),
-    MAIL_PASSWORD=os.getenv("MAIL_PASSWORD"),
-    MAIL_FROM=os.getenv("MAIL_FROM"),
-    MAIL_PORT=int(os.getenv("MAIL_PORT",587)),
-    MAIL_SERVER=os.getenv("MAIL_SERVER"),
-    MAIL_STARTTLS=True,
-    MAIL_SSL_TLS=False,
-)
 
 otp_store = {}
 
@@ -413,7 +385,6 @@ class VerifyRequest(BaseModel):
 
 @app.post("/auth/send-otp")
 async def send_otp(data: EmailRequest):
-
     otp = str(random.randint(100000, 999999))
 
     otp_store[data.email] = {
@@ -421,15 +392,18 @@ async def send_otp(data: EmailRequest):
         "expires": datetime.utcnow() + timedelta(minutes=5)
     }
 
-    message = MessageSchema(
-        subject="CodeHax OTP Verification",
-        recipients=[data.email],
-        body=f"Your OTP is: {otp}",
-        subtype="plain"
-    )
-
-    fm = FastMail(conf)
-    await fm.send_message(message)
+    try:
+        resend.api_key = os.getenv("RESEND_API_KEY")
+        resend.Emails.send({
+            "from": "noreply@codehax.in",
+            "to": data.email,
+            "subject": "CodeHax OTP Verification",
+            "text": f"Your OTP is: {otp}"
+        })
+        logger.info(f"✓ OTP sent to {data.email}")
+    except Exception as e:
+        logger.error(f"✗ Email sending failed: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to send OTP: {str(e)}")
 
     return {"success": True}
 
@@ -451,7 +425,6 @@ async def verify_otp(data: VerifyRequest):
     del otp_store[data.email]
 
     return {"success": True}
-
 
 
 # ============================================
@@ -519,9 +492,6 @@ def parse_response(text: str) -> tuple:
 async def debug_code(request: dict, authorization: str = Header(None)):
     """Debug code (with session memory + continuous chat support)"""
 
-    # =============================
-    # AUTH CHECK
-    # =============================
     if not authorization:
         raise HTTPException(status_code=401, detail="Not authenticated")
 
@@ -541,9 +511,6 @@ async def debug_code(request: dict, authorization: str = Header(None)):
         if not code:
             raise HTTPException(status_code=400, detail="Code is required")
 
-        # =============================
-        # LOAD SESSION MEMORY
-        # =============================
         history_messages = []
 
         if session_id:
@@ -567,9 +534,6 @@ async def debug_code(request: dict, authorization: str = Header(None)):
                         "content": m["ai_response"]
                     })
 
-        # =============================
-        # SYSTEM INSTRUCTION (IMPORTANT)
-        # =============================
         history_messages.append({
             "role": "system",
             "content": """You are an elite hacker and code expert.
@@ -593,17 +557,11 @@ TIPS:
 """
         })
 
-        # =============================
-        # CURRENT USER MESSAGE
-        # =============================
         history_messages.append({
             "role": "user",
             "content": f"{code}\n\nLanguage: {language}\nError: {error}\nContext: {context}"
         })
 
-        # =============================
-        # SEND TO AI
-        # =============================
         message = groq_client.chat.completions.create(
             model="openai/gpt-oss-120b",
             messages=history_messages,
@@ -629,10 +587,8 @@ TIPS:
     except Exception as e:
         logger.error(f"✗ Debug error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
-    
 
 
-    
 # ============================================
 # HEALTH ENDPOINTS
 # ============================================
@@ -662,5 +618,3 @@ if __name__ == "__main__":
     logger.info("Features: Authentication, MongoDB, Chat History, Sessions")
     logger.info("=" * 60)
     uvicorn.run(app, host="0.0.0.0", port=8000)
-
-
