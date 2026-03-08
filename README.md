@@ -25,7 +25,6 @@
 ---
 
 🌐 **Live Demo:** [https://codehax.vercel.app](https://codehax.vercel.app)  
-📡 **API Docs:** [https://codehax-backend.onrender.com/docs](https://codehax-backend.onrender.com/docs)
 
 </div>
 
