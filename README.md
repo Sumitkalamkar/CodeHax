@@ -83,10 +83,9 @@ Powered by **Groq's ultra-fast inference**, CodeHax delivers AI responses in mil
 
 <div align="center">
 
-| Login Page | Signup Page |OTP Verification | Chat Interface |Debugger Interface|
-|:---:|:---:|:---:|
-| ![Login](code_hax/Screenshot/login_page.png) | ![Chat](code_hax/Screenshot/Neural_vault_chat.png) |![OTP](code_hax/Screenshot/signup_page.png) | ![Chat](code_hax/Screenshot/Neural_vault_chat.png) |![Chat](code_hax/Screenshot/Neural_vault_chat.png) |
-
+| Login Page | Signup Page | OTP Verification | Chat Interface | Debugger |
+|:---:|:---:|:---:|:---:|:---:|
+| ![Login](code_hax/Screenshot/login_page.png) | ![Signup](code_hax/Screenshot/signup_page.png) | ![OTP](code_hax/Screenshot/otp_page.png) | ![Chat](code_hax/Screenshot/Neural_vault_chat.png) | ![Debugger](code_hax/Screenshot/Debugger_page.png) |
 
 </div>
 
