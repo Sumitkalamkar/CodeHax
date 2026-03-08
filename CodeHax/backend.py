@@ -31,7 +31,10 @@ logger = logging.getLogger(__name__)
 app = FastAPI(
     title="CodeHax - Professional Edition",
     description="Code Debugger with MongoDB & Authentication",
-    version="2.0.0"
+    version="2.0.0",
+    docs_url=None,
+    redoc_url=None,
+    openapi_url=None,
 )
 
 # CORS middleware
