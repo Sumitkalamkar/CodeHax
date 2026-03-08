@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⚡ CodeHax
+#  CodeHax
 
 <img src="code_hax/Screenshot/logo.png" alt="CodeHax Logo" width="120" height="120" />
 
@@ -31,7 +31,7 @@
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Overview](#-overview)
 - [Features](#-features)
@@ -53,7 +53,7 @@
 
 ---
 
-## 🔥 Overview
+## Overview
 
 **CodeHax** is a full-stack AI-powered code debugging and analysis chatbot. It helps developers instantly identify bugs, optimize code, and understand complex logic — all within a sleek, cyberpunk-themed interface.
 
@@ -63,23 +63,23 @@ Powered by **Groq's ultra-fast inference**, CodeHax delivers AI responses in mil
 
 ---
 
-## ✨ Features
+## Features
 
 | Feature | Description |
 |---------|-------------|
-| 🤖 **AI Code Debugging** | Instant bug detection and fixes powered by Groq AI |
-| 💬 **Session Memory** | AI remembers full conversation context within sessions |
-| 📚 **Neural Vault** | Chat history stored in MongoDB, grouped by session |
-| 🔐 **JWT Authentication** | Secure login/signup with bcrypt password hashing |
-| 📧 **Email OTP** | 6-digit OTP email verification via Resend API |
-| 🌐 **Multi-Language** | Python, JavaScript, Java, C++, Rust, Go |
-| 📱 **Fully Responsive** | Mobile, tablet and desktop layouts |
-| ⚡ **Ultra Fast** | Groq LPU delivers sub-second AI responses |
-| 🎨 **Hacker UI** | Dark cyberpunk aesthetic with neon green accents |
+| **AI Code Debugging** | Instant bug detection and fixes powered by Groq AI |
+| **Session Memory** | AI remembers full conversation context within sessions |
+| **Neural Vault** | Chat history stored in MongoDB, grouped by session |
+| **JWT Authentication** | Secure login/signup with bcrypt password hashing |
+| **Email OTP** | 6-digit OTP email verification via Resend API |
+| **Multi-Language** | Python, JavaScript, Java, C++, Rust, Go |
+| **Fully Responsive** | Mobile, tablet and desktop layouts |
+| **Ultra Fast** | Groq LPU delivers sub-second AI responses |
+| **Hacker UI** | Dark cyberpunk aesthetic with neon green accents |
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 <div align="center">
 
@@ -91,7 +91,7 @@ Powered by **Groq's ultra-fast inference**, CodeHax delivers AI responses in mil
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 | Technology | Version | Purpose |
@@ -128,7 +128,7 @@ Powered by **Groq's ultra-fast inference**, CodeHax delivers AI responses in mil
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 CodeHax/                          # Root repository
@@ -172,7 +172,7 @@ CodeHax/                          # Root repository
 
 ---
 
-## 📦 Requirements
+## Requirements
 
 ### System Requirements
 
@@ -188,15 +188,15 @@ CodeHax/                          # Root repository
 
 | Service | Free Plan | Link |
 |---------|-----------|------|
-| MongoDB Atlas | ✅ 512MB free | [mongodb.com](https://mongodb.com) |
-| Groq API | ✅ Free tier | [console.groq.com](https://console.groq.com) |
-| Resend | ✅ 3000 emails/month free | [resend.com](https://resend.com) |
-| Vercel | ✅ Free hobby plan | [vercel.com](https://vercel.com) |
-| Render | ✅ Free tier | [render.com](https://render.com) |
+| MongoDB Atlas | 512MB free | [mongodb.com](https://mongodb.com) |
+| Groq API | Free tier | [console.groq.com](https://console.groq.com) |
+| Resend | 3000 emails/month free | [resend.com](https://resend.com) |
+| Vercel | Free hobby plan | [vercel.com](https://vercel.com) |
+| Render | Free tier | [render.com](https://render.com) |
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Clone the Repository
 
@@ -245,8 +245,8 @@ Run the backend:
 python backend.py
 ```
 
-✅ Backend running at: `http://localhost:8000`  
-✅ API docs at: `http://localhost:8000/docs`
+Backend running at: `http://localhost:8000`  
+API docs at: `http://localhost:8000/docs`
 
 ---
 
@@ -279,21 +279,21 @@ flutter run
 
 ---
 
-## 🔐 Environment Variables
+## Environment Variables
 
 ### Backend `.env`
 
 | Variable | Required | Description | Example |
 |----------|----------|-------------|---------|
-| `GROQ_API_KEY` | ✅ | Groq AI API key | `gsk_abc123...` |
-| `MONGO_URI` | ✅ | MongoDB Atlas connection string | `mongodb+srv://...` |
-| `SECRET_KEY` | ✅ | JWT signing secret (32+ chars) | `my_super_secret_key` |
-| `RESEND_API_KEY` | ✅ | Resend email API key | `re_abc123...` |
+| `GROQ_API_KEY` | Yes | Groq AI API key | `gsk_abc123...` |
+| `MONGO_URI` | Yes | MongoDB Atlas connection string | `mongodb+srv://...` |
+| `SECRET_KEY` | Yes | JWT signing secret (32+ chars) | `my_super_secret_key` |
+| `RESEND_API_KEY` | Yes | Resend email API key | `re_abc123...` |
 
 ### How to get each key
 
 <details>
-<summary>🔑 GROQ_API_KEY</summary>
+<summary> GROQ_API_KEY</summary>
 
 1. Visit [console.groq.com](https://console.groq.com)
 2. Sign up / Login
@@ -303,7 +303,7 @@ flutter run
 </details>
 
 <details>
-<summary>🍃 MONGO_URI</summary>
+<summary> MONGO_URI</summary>
 
 1. Visit [mongodb.com](https://mongodb.com) → Create free account
 2. Create a new **Cluster** (free M0 tier)
@@ -327,7 +327,7 @@ flutter run
 
 ---
 
-## 📡 API Documentation
+## API Documentation
 
 Full interactive docs: [https://codehax-backend.onrender.com/docs](https://codehax-backend.onrender.com/docs)
 
@@ -381,7 +381,7 @@ curl -X POST https://codehax-backend.onrender.com/debug \
 
 ---
 
-## ☁️ Deployment
+## Deployment
 
 ### Vercel (Frontend)
 
@@ -405,7 +405,7 @@ Follow the prompts:
 - Link to existing project or create new
 - Set project name (e.g., `codehax`)
 
-✅ Your app will be live at `https://codehax.vercel.app`
+Your app will be live at `https://codehax.vercel.app`
 
 To update after code changes:
 ```bash
@@ -430,7 +430,7 @@ flutter build web && cd build/web && vercel --prod
    ```
 7. Click **Deploy**
 
-✅ Backend live at `https://your-service.onrender.com`
+Backend live at `https://your-service.onrender.com`
 
 ---
 
@@ -589,7 +589,7 @@ docker-compose down
 
 ---
 
-## ⏰ Keep Alive
+## Keep Alive
 
 Render's free tier spins down after 15 minutes of inactivity. To prevent this, set up a free cron job:
 
@@ -603,7 +603,7 @@ This pings your backend every 14 minutes keeping it always awake. ✅
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Here's how:
 
@@ -634,14 +634,14 @@ Contributions are welcome! Here's how:
 
 ---
 
-## 🐛 Known Issues
+## Known Issues
 
 - Render free tier has cold start (~30 sec) on first request after inactivity
 - OTP is stored in memory — restarting server clears pending OTPs
 
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
 - [ ] Custom GPT model trained from scratch
 - [ ] VS Code Extension
@@ -652,13 +652,13 @@ Contributions are welcome! Here's how:
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 👨‍💻 Author
+## Author
 
 <div align="center">
 
